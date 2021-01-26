@@ -12,7 +12,7 @@ $ cd netbox-kubernetes
 $ mkdir /netbox/data  ## On All Nodes
 $ kubectl apply -f netbox-namespace.yaml
 $ kubectl apply -f storageclass.yaml --n netbox
-$ kubectl apply -f persistant_volume -n netbox
+$ kubectl patch storageclass netbox -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 $ kubectl apply -f postgres-all.yaml --namespace netbox
 $ kubectl apply -f netbox-all.yaml --namespace netbox
 $ kubectl apply -f nginx-all.yaml --namespace netbox
