@@ -4,3 +4,22 @@ metadata:
   name: netbox
 provisioner: kubernetes.io/no-provisioner
 volumeBindingMode: Immediate
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: netbox-pv-volume
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: netbox
+  local:
+    path: "/netbox/data"
