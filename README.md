@@ -1,23 +1,16 @@
 # netbox-kubernetes
-Kubernetes manifest resources for Netbox using local filesystems on 2 nodes (adjust the replicas and PV's for more or less nodeS).  all images are pulled from docker hub. Netbox images pulled from https://hub.docker.com/r/ninech/netbox/
+Kubernetes manifest resources for Netbox using local filesystems on 2 nodes (adjust the replicas and PV's for more or less nodeS).  all images are pulled from docker hub. Netbox images pulled from https://hub.docker.com/r/netboxcommunity/netbox/
 
 To get NetBox up and running:
-!! Ensure that you modify the nodeAffinity.required.nodeSelectorTerms.matchExpressions.values with the hostnames of your K8s nodes !!
 ```
 $ git clone [this repo]
 $ cd netbox-kubernetes
-$ mkdir /netbox/data  ## On All Nodes
-$ kubectl apply -f netbox-namespace.yaml
-$ kubectl apply -f storageclass.yaml -n netbox ## Ensure you have changed the hostnames in the 'values' field in this yaml file first
-$ kubectl patch storageclass netbox -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
-$ kubectl apply -f postgres-all.yaml --namespace netbox
-$ kubectl apply -f netbox-all.yaml --namespace netbox
-$ kubectl apply -f nginx-all.yaml --namespace netbox
+$ kubectl apply -k .
 ```
 
 Glean that the pods are running, which nodes they are on, and what port it is using for NAT
 ```
-$ [jlunde@192-168-93-28 netbox-kubernetes]$ kubectl get pods -o wide --sort-by="{.spec.nodeName}" -n netbox
+$ kubectl get pods -o wide --sort-by="{.spec.nodeName}" -n netbox
 NAME                       READY   STATUS    RESTARTS   AGE   IP               NODE            NOMINATED NODE   READINESS GATES
 netbox-79f869bf96-tw9t4    1/1     Running   0          16m   10.244.138.139   192-168-93-27   <none>           <none>
 nginx-5dcf99d9d-9gt9p      1/1     Running   0          16m   10.244.138.140   192-168-93-27   <none>           <none>
@@ -36,7 +29,3 @@ In my example output above, I can access the netbox instance on my node IP addre
 
 * Username: **admin**
 * Password: **admin**
-
-
-## Dependencies
-https://hub.docker.com/r/ninech/netbox/
