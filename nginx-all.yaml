@@ -5,6 +5,11 @@ metadata:
   labels:
     frontend: nginx
 spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      frontend: nginx
   replicas: 1
   template:
     metadata:
