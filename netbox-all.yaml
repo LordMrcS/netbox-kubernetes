@@ -20,7 +20,7 @@ spec:
       - name: netbox
         image: netboxcommunity/netbox:v3.0.7-ldap
         ports:
-        - containerPort: 8000
+        - containerPort: 8080
         env:
         - name: ALLOWED_HOSTS
           valueFrom:
@@ -136,8 +136,8 @@ metadata:
 spec:
   ports:
   - name: nbox
-    port: 8000
-    targetPort: 8000
+    port: 8080
+    targetPort: 8080
   selector:
     app: netbox
 
@@ -207,7 +207,7 @@ data:
             alias /opt/netbox/netbox/static/;
           }
           location / {
-            proxy_pass http://netbox:8000;
+            proxy_pass http://netbox:8080;
             proxy_set_header X-Forwarded-Host $http_host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-Proto $scheme;
