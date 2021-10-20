@@ -45,7 +45,8 @@ metadata:
   labels:
     frontend: nginx
 spec:
-  type: NodePort
+  #type: NodePort
+  type: LoadBalancer
   ports:
   - name: "80"
     port: 80
