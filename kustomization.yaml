@@ -1,0 +1,6 @@
+namespace: netbox
+resources:
+  - pvs.yaml
+  - postgres-all.yaml
+  - netbox-all.yaml
+  - nginx-all.yaml
