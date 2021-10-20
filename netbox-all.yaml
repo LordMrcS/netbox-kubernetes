@@ -5,6 +5,11 @@ metadata:
   labels:
     app: netbox
 spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: netbox
   replicas: 1
   template:
     metadata:
