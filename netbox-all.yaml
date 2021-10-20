@@ -150,7 +150,6 @@ metadata:
   labels:
     pvcname: netbox-static-files
 spec:
-  storageClassName: netbox
   accessModes:
   - ReadWriteOnce
   resources:
