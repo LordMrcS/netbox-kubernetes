@@ -20,7 +20,7 @@ spec:
       - name: netbox
         image: netboxcommunity/netbox:v3.0.7-ldap
         ports:
-        - containerPort: 8001
+        - containerPort: 8000
         env:
         - name: ALLOWED_HOSTS
           valueFrom:
@@ -136,8 +136,8 @@ metadata:
 spec:
   ports:
   - name: nbox
-    port: 8001
-    targetPort: 8001
+    port: 8000
+    targetPort: 8000
   selector:
     app: netbox
 
