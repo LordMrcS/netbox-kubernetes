@@ -150,6 +150,7 @@ metadata:
   labels:
     pvcname: netbox-static-files
 spec:
+  reclaimPolicy: delete
   accessModes:
   - ReadWriteOnce
   resources:
