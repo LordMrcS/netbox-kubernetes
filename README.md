@@ -1,5 +1,5 @@
 # netbox-kubernetes
-Kubernetes manifest resources for Netbox using local filesystems on 2 nodes (adjust the replicas and PV's for more or less nodeS).  all images are pulled from docker hub. Netbox images pulled from https://hub.docker.com/r/netboxcommunity/netbox/
+Kubernetes manifest resources for Netbox.  All images are pulled from docker hub. Netbox images pulled from https://hub.docker.com/r/netboxcommunity/netbox/
 
 To get NetBox up and running:
 ```
