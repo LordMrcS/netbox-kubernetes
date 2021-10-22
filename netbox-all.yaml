@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: netbox
-        image: netboxcommunity/netbox:v3.0.7-ldap
+        image: netboxcommunity/netbox:v3.0.8-ldap
         ports:
         - containerPort: 8080
         env:
@@ -112,11 +112,131 @@ spec:
             configMapKeyRef:
               key: SUPERUSER_PASSWORD
               name: netbox-netbox-env
+        - name: CORS_ORIGIN_ALLOW_ALL
+          valueFrom:
+            configMapKeyRef:
+              key: CORS_ORIGIN_ALLOW_ALL
+              name: netbox-netbox-env
+        - name: EMAIL_USE_SSL
+          valueFrom:
+            configMapKeyRef:
+              key: EMAIL_USE_SSL
+              name: netbox-netbox-env
+        - name: EMAIL_USE_TLS
+          valueFrom:
+            configMapKeyRef:
+              key: EMAIL_USE_TLS
+              name: netbox-netbox-env
+        - name: HOUSEKEEPING_INTERVAL
+          valueFrom:
+            configMapKeyRef:
+              key: HOUSEKEEPING_INTERVAL
+              name: netbox-netbox-env
+        - name: MAX_PAGE_SIZE
+          valueFrom:
+            configMapKeyRef:
+              key: MAX_PAGE_SIZE
+              name: netbox-netbox-env
+        - name: MEDIA_ROOT
+          valueFrom:
+            configMapKeyRef:
+              key: MEDIA_ROOT
+              name: netbox-netbox-env
+        - name: METRICS_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              key: METRICS_ENABLED
+              name: netbox-netbox-env
+        - name: NAPALM_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              key: NAPALM_TIMEOUT
+              name: netbox-netbox-env
+        - name: REDIS_CACHE_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_CACHE_DATABASE
+              name: netbox-netbox-env
+        - name: REDIS_CACHE_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_CACHE_HOST
+              name: netbox-netbox-env
+        - name: REDIS_CACHE_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_CACHE_PASSWORD
+              name: netbox-netbox-env
+        - name: REDIS_CACHE_SSL
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_CACHE_SSL
+              name: netbox-netbox-env
+        - name: REDIS_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_DATABASE
+              name: netbox-netbox-env
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_HOST
+              name: netbox-netbox-env
+        - name: REDIS_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_PASSWORD
+              name: netbox-netbox-env
+        - name: REDIS_SSL
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_SSL
+              name: netbox-netbox-env
+        - name: RELEASE_CHECK_URL
+          valueFrom:
+            configMapKeyRef:
+              key: RELEASE_CHECK_URL
+              name: netbox-netbox-env
+        - name: SKIP_STARTUP_SCRIPTS
+          valueFrom:
+            configMapKeyRef:
+              key: SKIP_STARTUP_SCRIPTS
+              name: netbox-netbox-env
+        - name: SKIP_SUPERUSER
+          valueFrom:
+            configMapKeyRef:
+              key: SKIP_SUPERUSER
+              name: netbox-netbox-env
+        - name: WEBHOOKS_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              key: WEBHOOKS_ENABLED
+              name: netbox-netbox-env
+#        - name: REMOTE_AUTH_BACKEND
+#          valueFrom:
+#            configMapKeyRef:
+#              key: REMOTE_AUTH_BACKEND
+#              name: netbox-ldap-env
+#        - name: AUTH_LDAP_SERVER_URI
+#          valueFrom:
+#            configMapKeyRef:
+#              key: AUTH_LDAP_SERVER_URI
+#              name: netbox-ldap-env
+#        - name: AUTH_LDAP_USER_DN_TEMPLATE
+#          valueFrom:
+#            configMapKeyRef:
+#              key: AUTH_LDAP_USER_DN_TEMPLATE
+#              name: netbox-ldap-env
+#        - name: AUTH_LDAP_MIRROR_GROUPS
+#          valueFrom:
+#            configMapKeyRef:
+#              key: AUTH_LDAP_MIRROR_GROUPS
+#              name: netbox-ldap-env
         volumeMounts:
         - name: netbox-nginx-config
           mountPath: /etc/netbox-nginx/ 
         - name: netbox-static-files
-          mountPath: /opt/netbox/netbox/static  
+          mountPath: /opt/netbox/netbox/static
       restartPolicy: Always
       volumes:
       - name: netbox-nginx-config
@@ -163,23 +283,48 @@ metadata:
   name: netbox-netbox-env
 data:
   ALLOWED_HOSTS: '*'
-  DB_HOST: postgres
-  DB_NAME: netbox
-  DB_PASSWORD: J5brHrAXFLQSif0K
-  DB_USER: netbox
-  EMAIL_FROM: netbox@bar.com
-  EMAIL_PASSWORD: bar
+  DB_HOST: "postgres"
+  DB_NAME: "netbox"
+  DB_PASSWORD: "J5brHrAXFLQSif0K"
+  DB_USER: "netbox"
+  DB_WAIT_DEBUG: "1"
+  EMAIL_FROM: "netbox@bar.com"
+  EMAIL_PASSWORD: "bar"
   EMAIL_PORT: "25"
-  EMAIL_SERVER: localhost
+  EMAIL_SERVER: "localhost"
   EMAIL_TIMEOUT: "10"
-  EMAIL_USERNAME: foo
-  NETBOX_PASSWORD: guest
-  NETBOX_USERNAME: guest
-  SECRET_KEY: r8OwDznj!!dci
-  SUPERUSER_API_TOKEN: 0123456789abcdef0123456789abcdef01234567
-  SUPERUSER_EMAIL: admin@example.com
-  SUPERUSER_NAME: admin
-  SUPERUSER_PASSWORD: admin
+  EMAIL_USERNAME: "foo"
+  NETBOX_PASSWORD: "guest"
+  NETBOX_USERNAME: "guest"
+  SUPERUSER_API_TOKEN: "0123456789abcdef0123456789abcdef01234567"
+  SUPERUSER_EMAIL: "admin@example.com"
+  SUPERUSER_NAME: "admin"
+  SUPERUSER_PASSWORD: "admin"
+  CORS_ORIGIN_ALLOW_ALL: "True"
+  EMAIL_USE_SSL: "false"
+  EMAIL_USE_TLS: "false"
+  HOUSEKEEPING_INTERVAL: "86400"
+  MAX_PAGE_SIZE: "1000"
+  MEDIA_ROOT: "/opt/netbox/netbox/media"
+  METRICS_ENABLED: "false"
+  NAPALM_TIMEOUT: "10"
+  REDIS_CACHE_DATABASE: "1"
+  REDIS_CACHE_HOST: "redis-cache"
+  REDIS_CACHE_PASSWORD: "t4Ph722qJ5QHeQ1qfu36"
+  REDIS_CACHE_SSL: "false"
+  REDIS_DATABASE: "0"
+  REDIS_HOST: "redis"
+  REDIS_PASSWORD: "H733Kdjndks81"
+  REDIS_SSL: "false"
+  RELEASE_CHECK_URL: "https://api.github.com/repos/netbox-community/netbox/releases"
+  SECRET_KEY: "r8OwDznj!!dci#P9ghmRfdu1Ysxm0AiPeDCQhKE+N_rClfWNj"
+  SKIP_STARTUP_SCRIPTS: "false"
+  SKIP_SUPERUSER: "true"
+  WEBHOOKS_ENABLED: "true"
+#  EMAIL_SSL_CERTFILE: 
+#  EMAIL_SSL_KEYFILE:   
+#  NAPALM_USERNAME:   
+#  NAPALM_PASSWORD: 
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -215,5 +360,4 @@ data:
           }
       }
     }
-
 
