@@ -65,4 +65,3 @@ data:
   POSTGRES_DB: netbox
   POSTGRES_USER: netbox
   POSTGRES_PASSWORD: J5brHrAXFLQSif0K
-  
