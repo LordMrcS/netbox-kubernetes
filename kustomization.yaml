@@ -1,5 +1,6 @@
 namespace: netbox
 resources:
   - postgres-all.yaml
+  - redis-all.yaml
   - netbox-all.yaml
   - nginx-all.yaml
