@@ -1,0 +1,123 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    backend: redis
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      backend: redis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        backend: redis
+    spec:
+      containers:
+      - name: redis
+        ports:
+        - containerPort: 6379
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_PASSWORD
+              name: netbox-netbox-env
+
+        image: redis:6-alpine
+        
+        resources: {}
+        volumeMounts:
+        - mountPath: /data
+          name: netbox-redis-data
+        args:
+        - sh
+        - -c
+        - redis-server --appendonly yes --requirepass $REDIS_PASSWORD
+      restartPolicy: Always
+      volumes:
+        - name: netbox-redis-data
+          persistentVolumeClaim:
+            claimName: netbox-redis-data
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    backend: redis-cache
+  name: redis-cache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      backend: redis-cache
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        backend: redis-cache
+    spec:
+      containers:
+        - args:
+            - sh
+            - -c
+            - redis-server --requirepass $REDIS_PASSWORD
+          image: redis:6-alpine
+          name: redis-cache
+          resources: {}
+          env:
+          - name: REDIS_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                key: REDIS_CACHE_PASSWORD
+                name: netbox-netbox-env
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels:
+    backend: redis
+spec:
+  clusterIP: None
+  ports:
+  - name: headless
+    port: 6379
+    targetPort: 6379
+  selector:
+    backend: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cache
+  labels:
+    backend: redis-cache
+spec:
+  clusterIP: None
+  ports:
+  - name: headless
+    port: 6379
+    targetPort: 6379
+  selector:
+    backend: redis-cache
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    io.kompose.service: netbox-redis-data
+  name: netbox-redis-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+status: {}
